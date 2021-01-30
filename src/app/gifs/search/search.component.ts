@@ -1,0 +1,31 @@
+import { ThrowStmt } from '@angular/compiler';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { GifsService } from '../services/gifs.service';
+
+@Component({
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styles: [
+  ]
+})
+export class SearchComponent implements OnInit {
+
+  @ViewChild('searchGif') searchGif!: ElementRef<HTMLInputElement>;
+
+  constructor(private gifsService: GifsService) { }
+
+  ngOnInit(): void {
+  }
+
+  search() {
+    const value = this.searchGif.nativeElement.value;
+
+    if (value.trim().length === 0) {
+      return;
+    }
+
+    this.gifsService.searchGif(value);
+
+    this.searchGif.nativeElement.value = '';
+  }
+}
